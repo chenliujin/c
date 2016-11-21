@@ -116,6 +116,10 @@ class transportation extends \Model
 
 		$transportation_zone = transportation_zone::get_transportation_zone($this->transportation_id, $delivery_country);
 
+		if (!$transportation_zone) {
+			throw new \Exception('zone not supported');
+		}
+
 		$shipping_cost  = $total_weight * $transportation_zone->price;
 
 		$shipping_cost += $this->registered_fee;
