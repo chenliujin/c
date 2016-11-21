@@ -116,6 +116,18 @@ class Model
 
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-11-21
+	 */
+	public function find($params)
+	{
+		$data = $this->findAll($params);
+
+		return $data[0];
+
+	}
+
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
 	 * @since 2016-09-24
 	 */
 	static public function findOne( array $options = [] )
