@@ -86,10 +86,6 @@ class Model
 	public function get($pk)
 	{
 		try {
-			$class = $this->getTableName();
-
-			$object = new $class;
-
 			$keys = $this->getPrimaryKey();
 
 			foreach ($keys as $key) {

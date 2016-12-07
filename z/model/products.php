@@ -19,6 +19,15 @@ class products extends \Model
 	}
 
 	/**
+	 * @authro chenliujin <liujin.chen@qq.com>
+	 * @since 2016-12-07
+	 */
+	public function getPrimaryKey()
+	{
+		return ['products_id'];
+	}
+
+	/**
 	 * @author chenliujin <liujin.chen@qq.com>
 	 * @since 2016-10-07
 	 */
