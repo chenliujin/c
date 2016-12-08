@@ -198,4 +198,59 @@ class products extends \Model
 		return $page;
 	
 	}
+
+
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-12-08
+	 */
+	static public function UploadProductImage($products_id)
+	{
+		if (!$products_id) return;
+
+		$www_root = '/data/www/z/';
+
+		$path = str_pad(substr($products_id, 0, 4), 4, '0', STR_PAD_LEFT);
+		$path = substr($path, 0, 2) . '/' . substr($path, 2, 2) . '/' . $products_id;
+		$path = 'II/' . $path . '/';
+
+		@mkdir($path, 0777, TRUE);
+
+		foreach ($_FILES['product_image']['error'] as $i => $error) {
+			if ($error != UPLOAD_ERR_OK) continue; 
+
+			$file = $path . $_FILES['product_image']['name'][$i];
+			$images[] = $file;
+
+			$file = $www_root . $file;
+			$path_info = pathinfo($file);
+
+			$rs = move_uploaded_file($_FILES['product_image']['tmp_name'][$i], $file);
+
+			if ($rs) {
+				$imagick = new \Imagick($file);
+
+				$imagick->resizeImage(450, 450, \Imagick::FILTER_LANCZOS, TRUE);
+				$imagick->writeImage($www_root . $path . $path_info['filename'] . '_450.' . $path_info['extension']);
+
+				if ($i == 0) {
+					$imagick->resizeImage(220, 220, \Imagick::FILTER_LANCZOS, TRUE);
+					$imagick->writeImage($www_root . $path . $path_info['filename'] . '_220.' . $path_info['extension']);
+
+					$imagick->resizeImage(100, 100, \Imagick::FILTER_LANCZOS, TRUE);
+					$imagick->writeImage($www_root . $path . $path_info['filename'] . '_100.' . $path_info['extension']);
+				}
+
+				$imagick->resizeImage(40,  40,  \Imagick::FILTER_LANCZOS, TRUE);
+				$imagick->writeImage($www_root . $path . $path_info['filename'] . '_40.' . $path_info['extension']);
+			}
+		}
+
+		if (empty($images)) return;
+
+		$products = new self;
+		$products = $products->get($products_id);
+		$products->products_image = json_encode($images);
+		$products->update();
+	}
 }
