@@ -214,7 +214,7 @@ class products extends \Model
 		$path = substr($path, 0, 2) . '/' . substr($path, 2, 2) . '/' . $products_id;
 		$path = 'II/' . $path . '/';
 
-		@mkdir($path, 0777, TRUE);
+		@mkdir($www_root . $path, 0777, TRUE);
 
 		foreach ($_FILES['product_image']['error'] as $i => $error) {
 			if ($error != UPLOAD_ERR_OK) continue; 
