@@ -269,4 +269,14 @@ class products extends \Model
 		$products->products_image = json_encode($images);
 		$products->update();
 	}
+
+
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2106-12-09
+	 */
+	public function base_price()
+	{
+		return $this->products_price * (1 + $this->product_gross_rate);
+	}
 }
