@@ -159,9 +159,6 @@ class Model
 	 */
 	public function insert()
 	{
-		$class = $this->getTableName();
-		$object = new $class;
-
 		$fields = get_object_vars($this);
 
 		foreach ($fields as $field => $value) {

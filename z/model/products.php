@@ -220,14 +220,14 @@ class products extends \Model
 	 * @author chenliujin <liujin.chen@qq.com>
 	 * @since 2016-12-08
 	 */
-	static public function UploadProductImage($products_id)
+	public function UploadProductImage()
 	{
-		if (!$products_id) return;
+		if (!$this->products_id) return '';
 
 		$www_root = '/data/www/z/';
 
-		$path = str_pad(substr($products_id, 0, 4), 4, '0', STR_PAD_LEFT);
-		$path = substr($path, 0, 2) . '/' . substr($path, 2, 2) . '/' . $products_id;
+		$path = str_pad(substr($this->products_id, 0, 4), 4, '0', STR_PAD_LEFT);
+		$path = substr($path, 0, 2) . '/' . substr($path, 2, 2) . '/' . $this->products_id;
 		$path = 'II/' . $path . '/';
 
 		@mkdir($www_root . $path, 0777, TRUE);
@@ -262,12 +262,7 @@ class products extends \Model
 			}
 		}
 
-		if (empty($images)) return;
-
-		$products = new self;
-		$products = $products->get($products_id);
-		$products->products_image = json_encode($images);
-		$products->update();
+		return !empty($images) ? json_encode($images) : (!empty($this->products_image) ? $this->products_image : '');
 	}
 
 
