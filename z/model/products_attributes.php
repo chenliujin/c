@@ -60,7 +60,7 @@ class products_attributes extends \Model
 			LEFT JOIN ' . \z\products_options::GetTableName() . ' ON options_id = products_options_id 
 			LEFT JOIN ' . \z\products_options_values::GetTableName() . ' ON options_values_id = products_options_values_id AND products_options.language_id = products_options_values.language_id
 			WHERE parent_id = ? AND products_options.language_id = ? 
-			ORDER BY products_attributes.products_options_sort_order';
+			ORDER BY products_attributes.products_options_sort_order, products_attributes.products_id';
 
 		$params = [$parent_id, $language_id];
 
