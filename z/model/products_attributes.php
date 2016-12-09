@@ -16,6 +16,33 @@ class products_attributes extends \Model
 		return 'products_attributes';
 	}
 
+
+	/**
+	 * @authro chenliujin <liujin.chen@qq.com>
+	 * @since 2016-12-09
+	 */
+	public function getPrimaryKey()
+	{
+		return ['products_attributes_id'];
+	}
+
+
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-12-09
+	 */
+	static public function GetInstance()
+	{
+		static $instance;
+
+		if (!$instance) {
+			$instance = new self;
+		}
+
+		return $instance;
+	}
+
+
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>
 	 * @since 2016-12-06

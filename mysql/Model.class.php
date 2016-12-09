@@ -99,7 +99,6 @@ class Model
 
 			$result = array_shift(self::query($sql, $params, get_class($this)));
 
-
 			return $result;
 		} catch (PDOException $e) {
 			error_log('FILE: ' . __FILE__);
@@ -195,9 +194,6 @@ class Model
 	 */
 	public function update()
 	{
-		$class = $this->getTableName();
-		$object = new $class;
-
 		$fields = get_object_vars($this);
 
 		$pk = $this->getPrimaryKey();

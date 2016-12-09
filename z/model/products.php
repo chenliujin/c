@@ -27,6 +27,22 @@ class products extends \Model
 		return ['products_id'];
 	}
 
+
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-12-09
+	 */
+	static public function GetInstance()
+	{
+		static $instance;
+
+		if (!$instance) {
+			$instance = new self;
+		}
+
+		return $instance;
+	}
+
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>
 	 * @since 2016-10-07
