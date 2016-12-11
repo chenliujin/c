@@ -236,29 +236,30 @@ class products extends \Model
 			if ($error != UPLOAD_ERR_OK) continue; 
 
 			$file = $path . $_FILES['product_image']['name'][$i];
-			$images[] = $file;
 
-			$file = $www_root . $file;
-			$path_info = pathinfo($file);
+			$target = $www_root . $file;
+			$pathinfo = pathinfo($target);
 
-			$rs = move_uploaded_file($_FILES['product_image']['tmp_name'][$i], $file);
+			$rs = move_uploaded_file($_FILES['product_image']['tmp_name'][$i], $target);
 
-			if ($rs) {
-				$imagick = new \Imagick($file);
+			if ($rs & $i<5) {
+				$images[] = $file;
+
+				$imagick = new \Imagick($target);
 
 				$imagick->resizeImage(450, 450, \Imagick::FILTER_LANCZOS, TRUE);
-				$imagick->writeImage($www_root . $path . $path_info['filename'] . '_450.' . $path_info['extension']);
+				$imagick->writeImage($www_root . $path . $pathinfo['filename'] . '_450.' . $pathinfo['extension']);
 
 				if ($i == 0) {
 					$imagick->resizeImage(220, 220, \Imagick::FILTER_LANCZOS, TRUE);
-					$imagick->writeImage($www_root . $path . $path_info['filename'] . '_220.' . $path_info['extension']);
+					$imagick->writeImage($www_root . $path . $pathinfo['filename'] . '_220.' . $pathinfo['extension']);
 
 					$imagick->resizeImage(100, 100, \Imagick::FILTER_LANCZOS, TRUE);
-					$imagick->writeImage($www_root . $path . $path_info['filename'] . '_100.' . $path_info['extension']);
+					$imagick->writeImage($www_root . $path . $pathinfo['filename'] . '_100.' . $pathinfo['extension']);
 				}
 
 				$imagick->resizeImage(40,  40,  \Imagick::FILTER_LANCZOS, TRUE);
-				$imagick->writeImage($www_root . $path . $path_info['filename'] . '_40.' . $path_info['extension']);
+				$imagick->writeImage($www_root . $path . $pathinfo['filename'] . '_40.' . $pathinfo['extension']);
 			}
 		}
 
