@@ -263,7 +263,16 @@ class products extends \Model
 			}
 		}
 
-		return !empty($images) ? json_encode($images) : (!empty($this->products_image) ? $this->products_image : '');
+		if (!empty($images)) {
+			return json_encode($images);
+		} elseif (!empty($_POST['products_image_referer'])) {
+			$products = self::GetInstance();
+			$products = $products->get((int)$_POST['products_image_referer']);
+
+			return $products->products_image; 
+		} else {
+			return !empty($this->products_image) ? $this->products_image : '';
+		}
 	}
 
 
