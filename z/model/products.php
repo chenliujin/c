@@ -116,28 +116,20 @@ class products extends \Model
 	 */
 	static public function GetPriceList( $products_id )
 	{
-		global $db, $currencies;
+		global $currencies;
 
 		$price = new \stdClass;
 
-		$product_check = $db->Execute("
-			select 
-				products_tax_class_id, 
-				products_price, 
-				products_priced_by_attribute, 
-				product_is_free, 
-				product_is_call, 
-				products_type 
-			from " . TABLE_PRODUCTS . " 
-			where products_id = '" . (int)$products_id . "'" . " limit 1");
+		$products = self::GetInstance();
+		$products = $products->get($products_id);
 
 		// no prices on Document General
-		if ($product_check->fields['products_type'] == 3) {
+		if ($products->products_type == 3) {
 			return '';
 		}
 
-		$price->normal_price 	= zen_get_products_base_price($products_id);
-		$price->special_price 	= zen_get_products_special_price($products_id, true);
+		$price->normal_price 	= $products->base_price();
+		$price->special_price 	= $products->special_price(); 
 		$price->sale_price 		= zen_get_products_special_price($products_id, false);
 
 		if ($price->sale_price) {
@@ -278,10 +270,23 @@ class products extends \Model
 
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>
-	 * @since 2106-12-09
+	 * @since 2016-12-09
 	 */
 	public function base_price()
 	{
 		return $this->products_price * (1 + $this->product_gross_rate);
+	}
+
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-12-20
+	 */
+	public function special_price()
+	{
+		if ($this->product_gross_rate_special && $this->product_gross_rate_special < $this->product_gross_rate) {
+			return $this->products_price * (1 + $this->product_gross_rate_special);
+		} else {
+			return FALSE;
+		}
 	}
 }
