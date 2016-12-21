@@ -274,7 +274,7 @@ class products extends \Model
 	 */
 	public function base_price()
 	{
-		return $this->products_price * (1 + $this->product_gross_rate);
+		return $this->products_price * (1 + $this->product_gross_rate/100);
 	}
 
 	/**
@@ -284,7 +284,7 @@ class products extends \Model
 	public function special_price()
 	{
 		if ($this->product_gross_rate_special && $this->product_gross_rate_special < $this->product_gross_rate) {
-			return $this->products_price * (1 + $this->product_gross_rate_special);
+			return $this->products_price * (1 + $this->product_gross_rate_special/100);
 		} else {
 			return FALSE;
 		}
