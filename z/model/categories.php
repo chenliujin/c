@@ -1,10 +1,10 @@
 <?php
 namespace z;
 
-include_once('z/model/z.php');
+include_once('z/requires.php');
 include_once('z/model/categories_description.php');
 
-class categories extends \Model
+class categories extends z 
 {
 	static public $root;
 	static public $data;

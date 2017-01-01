@@ -1,9 +1,9 @@
 <?php
 namespace z;
 
-include_once('z/model/z.php');
+include_once('z/requires.php');
 
-class categories_description extends \Model
+class categories_description extends z 
 {
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>

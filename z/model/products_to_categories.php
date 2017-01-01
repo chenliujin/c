@@ -2,9 +2,9 @@
 
 namespace z;
 
-include_once('z/model/z.php');
+include_once('z/requires.php');
 
-class products_to_categories extends \Model
+class products_to_categories extends z 
 {
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>

@@ -1,9 +1,9 @@
 <?php
 namespace z;
 
-include('z/model/z.php');
+include('z/requires.php');
 
-class products_options extends \Model
+class products_options extends z 
 {
 	/**
 	 * @authro chenliujin <liujin.chen@qq.com>

@@ -1,11 +1,11 @@
 <?php
 namespace z;
 
-include_once('z/model/z.php');
+include_once('z/requires.php');
 include_once('z/model/products_options.php');
 include_once('z/model/products_options_values.php');
 
-class products_attributes extends \Model
+class products_attributes extends z 
 {
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>

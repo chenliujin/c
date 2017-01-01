@@ -2,9 +2,9 @@
 
 namespace z;
 
-include_once('z/model/z.php');
+include_once('z/requires.php');
 
-class transportation_zone extends \Model
+class transportation_zone extends z 
 {
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>

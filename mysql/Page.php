@@ -10,7 +10,7 @@ $rs = $page->data();
  * order by
  * group by
  */
-class Page extends \Model 
+class Page
 {
 	public $query;
 	public $query_params;
@@ -64,7 +64,8 @@ class Page extends \Model
 	public function total()
 	{
 		$query = preg_replace('/SELECT.+FROM/i', 'SELECT COUNT(*) AS total FROM', $this->query);
-		$result = $this->query($query, $this->query_params);
+		$result = $this->db->query($query, $this->query_params);
+
 
 		return $result[0]->total;
 	}
@@ -89,7 +90,7 @@ class Page extends \Model
 		$this->query .= ' ' . $this->order_by;
 		$this->query .= ' LIMIT ' . $offset;
 
-		return $this->query($this->query, $this->query_params);
+		return $this->db->query($this->query, $this->query_params);
 	}
 
 	/**

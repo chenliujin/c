@@ -1,13 +1,13 @@
 <?php
 namespace z;
 
-include_once('z/model/z.php');
+include_once('z/requires.php');
 
 /**
  * TODO
  * products_description.products_url: 添加字段生成产品的链接，考虑 SEO
  */
-class products extends \Model
+class products extends z 
 {
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>
@@ -184,7 +184,10 @@ class products extends \Model
 			$_SESSION['languages_id']
 		];
 
+		$db = parent::getInstance();
+
 		$page = new \Page($sql, $params);
+		$page->db = parent::getInstance();
 		$page->per_page_rows(12);
 		$page->order_by('ORDER BY products_id DESC');
 
@@ -200,6 +203,7 @@ class products extends \Model
 		$params = [];
 
 		$page = new \Page($sql, $params);
+		$page->db = parent::getInstance();
 		$page->per_page_rows(12);
 		//$page->order_by('ORDER BY products_id DESC');
 

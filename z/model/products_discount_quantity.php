@@ -1,9 +1,9 @@
 <?php
 namespace z;
 
-include_once('z/model/z.php');
+include_once('z/requires.php');
 
-class products_discount_quantity extends \Model
+class products_discount_quantity extends z 
 {
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>

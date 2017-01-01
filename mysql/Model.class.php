@@ -1,26 +1,12 @@
 <?php
-
 class Model
 {
-	static public $host 	= 'localhost';
-	static public $port 	= 3306;
-	static public $dbName 	= '';
-	static public $dbUser 	= 'root';
-	static public $dbPwd 	= '';
-	static public $dbo;
-
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>
 	 * @since 2016-09-07
 	 */
-    static public function GetDbHandle()
+    static public function connect($host='localhost', $port=3306, $dbName, $dbUser, $dbPwd)
     {
-		$host 	= self::$host;
-		$port 	= self::$port;
-		$dbName = self::$dbName;
-		$dbUser = self::$dbUser;
-		$dbPwd 	= self::$dbPwd;
-
         $errMode = PDO::ERRMODE_SILENT;
 
         $conn = new PDO("mysql:host={$host};port={$port};dbname={$dbName}", $dbUser, $dbPwd);
@@ -34,10 +20,10 @@ class Model
 	 * @author chenliujin <liujin.chen@qq.com>
 	 * @since 2013-04-01
 	 */
-	public static function query($sql, $params = array(), $class = 'stdClass')
+	public function query($sql, $params = array(), $class = 'stdClass')
 	{
 		try {
-			$dbh = self::$dbo->getDbHandle();
+			$dbh = $this->getDbHandle();
 
 			if (empty($params)) {
 				/**
@@ -72,9 +58,9 @@ class Model
 	 * @author chenliujin <liujin.chen@qq.com>
 	 * @since 2013-04-04
 	 */
-	public static function execute($sql, $params)
+	public function execute($sql, $params)
 	{
-		$dbh = self::$dbo->getDbHandle();
+		$dbh = $this->getDbHandle();
 		$sth = $dbh->prepare($sql);
 		return $sth->execute($params);
 	}
@@ -97,7 +83,7 @@ class Model
 
 			$sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE ' . implode(' AND ', $where);
 
-			$result = array_shift(self::query($sql, $params, get_class($this)));
+			$result = array_shift($this->query($sql, $params, get_class($this)));
 
 			return $result;
 		} catch (PDOException $e) {
@@ -170,7 +156,7 @@ class Model
 
 		$sql = 'INSERT INTO ' . $this->getTableName() . '(`' . join('`, `' , $column) . '`) VALUES (' . join(',', $column_key) . ')';
 
-		$dbh = self::$dbo->getDbHandle();
+		$dbh = $this->getDbHandle();
 		$sth = $dbh->prepare($sql);
 		$rs = $sth->execute($params);
 
@@ -207,7 +193,7 @@ class Model
 
 		$sql = 'UPDATE ' . $this->getTableName() . ' SET ' . implode(', ', $column) . ' WHERE ' . implode(' AND ', $pk_column);
 
-		$dbh = self::$dbo->getDbHandle();
+		$dbh = $this->getDbHandle();
 		$sth = $dbh->prepare($sql);
 		$rs = $sth->execute($params);
 
@@ -234,7 +220,7 @@ class Model
 			$params[':' . $pk] = $this->$pk;
 		}
 
-		$dbh = self::$dbo->getDbHandle();
+		$dbh = $this->getDbHandle();
 		$sth = $dbh->prepare($sql);
 		$rs = $sth->execute($params);
 
